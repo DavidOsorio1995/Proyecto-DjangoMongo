@@ -1,15 +1,50 @@
-<h1>Lista de productos</h1>
 
-<a href="{% url 'product_create' %}">Crear producto</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-<ul>
-  {% for product in products %}
-    <li>
-      {{ product.name }} - {{ product.description }} - {{ product.price }}
-      <a href="{% url 'product_update' product.pk %}">Editar</a>
-      <a href="{% url 'product_delete' product.pk %}">Eliminar</a>
-    </li>
-  {% empty %}
-    <li>No hay productos.</li>
-  {% endfor %}
-</ul>
+</head>
+<body>
+  <h1>Lista de productddos</h1>
+
+<a href="{% url 'product_create' %}" class="btn btn-success">Crear producto</a>
+<div class="container">
+
+
+
+
+  <ul>
+    {% for product in products %}
+
+
+
+        <div class="card  d-inline-block" style="width: 18rem;">
+          <div class="card-body card-custom">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ product.price }}</h6>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="{% url 'product_update' product.pk %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Eliminar</a>
+          </div>
+        </div>
+
+
+    {% empty %}
+      <li>No hay productos.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+</body>
+</html>
