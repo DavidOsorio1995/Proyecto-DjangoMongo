@@ -1,0 +1,37 @@
+<h1>Carrito de compras</h1>
+
+{% if carrito %}
+<script>
+  function calcularTotal() {
+    var total = 0;
+    var inputs = document.querySelectorAll('input[name^="quantity_"]');
+    inputs.forEach(function(input) {
+      var itemId = input.getAttribute('data-item-id');
+      var itemPrice = parseFloat(input.getAttribute('data-item-price'));
+      var quantity = parseInt(input.value);
+      total += itemPrice * quantity;
+    });
+    document.getElementById('total').innerText = '$' + total.toFixed(0);
+  }
+</script>
+
+<form method="POST" action="{% url 'realizar_compra' %}">
+  {% csrf_token %}
+  <ul>
+    {% for item in carrito %}
+      <li>
+        {{ item.name }} - ${{ item.price }} - Cantidad:
+        <input type="number" name="quantity_{{ item.pk }}" data-item-id="{{ item.pk }}" data-item-price="{{ item.price }}" value="{{ item.quantity }}" min="0" onchange="calcularTotal()">
+        <input type="hidden" name="product_id_{{ item.pk }}" value="{{ item.pk }}">
+        <a href="{% url 'quitar_del_carrito' item.pk %}">Quitar</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <p>Total: <span id="total">$0</span></p>
+  <input type="submit" value="Comprar" onclick="return confirm('¿Estás seguro de que deseas realizar la compra?\n\nTotal: $' + document.getElementById('total').innerText + ' ?')">
+</form>
+
+{% else %}
+  <p>No hay productos en el carrito.</p>
+{% endif %}
+<a href="{% url 'compra' %}">Continuar Comprando</a>
