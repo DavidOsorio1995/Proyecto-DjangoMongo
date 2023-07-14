@@ -3,14 +3,14 @@
 <a href="{% url 'product_create' %}">Crear producto</a>
 
 <form method="GET" action="{% url 'product_list' %}">
-  <input type="text" name="search" placeholder="Buscar por nombre" value="{{ request.GET.search }}">
+  <input type="text" nombre="search" placeholder="Buscar por nombre" value="{{ request.GET.search }}">
   <button type="submit">Buscar</button>
 </form>
 
 <ul>
   {% for product in page_obj %}
     <li>
-      {{ product.name }} -  valor ${{ product.price }} - stock disponible {{ product.quantity }} 
+      {{ product.nombre }} -  valor ${{ product.precio }} - stock disponible {{ product.cantidad }} 
       <a href="{% url 'product_update' product.pk %}">Editar</a>
       <a href="{% url 'product_delete' product.pk %}">Eliminar</a>
     </li>

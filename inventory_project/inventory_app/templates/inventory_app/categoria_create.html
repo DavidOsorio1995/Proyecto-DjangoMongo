@@ -1,0 +1,7 @@
+<h1>Crear categoria</h1>
+
+<form method="POST" action="{% url 'categoria_create' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Guardar</button>
+</form>

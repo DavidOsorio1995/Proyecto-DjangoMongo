@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from .models import Product
+from .models import Proveedor
+from .models import Categorias
 from .forms import ProductForm
+from .forms import CategoriasForm
+from .forms import ProveedorForm
+
 
 carrito = []
 
@@ -26,6 +31,26 @@ def product_create(request):
     else:
         form = ProductForm()
     return render(request, 'inventory_app/product_create.html', {'form': form})
+
+def proveedor_create(request):
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProveedorForm()
+    return render(request, 'inventory_app/proveedor_create.html', {'form': form})
+
+def categoria_create(request):
+    if request.method == 'POST':
+        form = CategoriasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = CategoriasForm()
+    return render(request, 'inventory_app/categoria_create.html', {'form': form})
 
 def product_update(request, pk):
     product = Product.objects.get(pk=pk)
@@ -56,17 +81,17 @@ def agregar_al_carrito(request, pk):
     return redirect('ver_carrito')
 
 def ver_carrito(request):
-    total = sum(item.price * item.quantity for item in carrito)
+    total = sum(item.precio * item.cantidad for item in carrito)
     return render(request, 'inventory_app/agregar_al_carrito.html', {'carrito': carrito, 'total': total})
 
 
 def realizar_compra(request):
     for item in carrito:
-        quantity_input = int(request.POST.get('quantity_{}'.format(item.pk), 0))
-        if quantity_input > 0:
-            quantity_difference = item.quantity - quantity_input
-            if quantity_difference >= 0:
-                item.quantity = quantity_difference
+        cantidad_input = int(request.POST.get('cantidad_{}'.format(item.pk), 0))
+        if cantidad_input > 0:
+            cantidad_difference = item.cantidad - cantidad_input
+            if cantidad_difference >= 0:
+                item.cantidad = cantidad_difference
                 item.save()
             else:
                 # Si la cantidad ingresada es mayor que la cantidad en la base de datos, puedes tomar una acción adecuada
