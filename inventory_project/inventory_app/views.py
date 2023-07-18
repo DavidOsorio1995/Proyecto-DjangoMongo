@@ -12,7 +12,7 @@ def product_list(request):
     if search_query:
         products = products.filter(name__icontains=search_query)
 
-    paginator = Paginator(products, 9)
+    paginator = Paginator(products, 7)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'inventory_app/product_list.html', {'page_obj': page_obj, 'search_query': search_query})
@@ -67,7 +67,7 @@ def provider_create(request):
 
 def compra(request):
     products = Product.objects.all()
-    paginator = Paginator(products, 9)
+    paginator = Paginator(products, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'inventory_app/compra.html', {'page_obj': page_obj})
@@ -79,7 +79,7 @@ def agregar_al_carrito(request, pk):
 
 def ver_carrito(request):
     total = sum(item.price * item.quantity for item in carrito)
-    return render(request, 'inventory_app/ver_carrito.html', {'carrito': carrito, 'total': total})
+    return render(request, 'inventory_app/agregar_al_carrito.html', {'carrito': carrito, 'total': total})
 
 def realizar_compra(request):
     for item in carrito:
@@ -104,3 +104,6 @@ def quitar_del_carrito(request, pk):
     product = Product.objects.get(pk=pk)
     carrito.remove(product)
     return redirect('ver_carrito')
+
+def login(request):
+    return render(request, 'inventory_app/login.html')
