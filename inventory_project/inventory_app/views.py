@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from .models import Product, Category, Provider
-from .forms import ProductForm, ProviderForm, CategoryForm
-
+from .forms import ProductForm, CategoryForm, ProviderForm
 
 carrito = []
 
@@ -44,9 +43,31 @@ def product_delete(request, pk):
     product.delete()
     return redirect('product_list')
 
+def category_create(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category_create')
+    else:
+        form = CategoryForm()
+    categories = Category.objects.all()
+    return render(request, 'inventory_app/category_create.html', {'form': form, 'categories': categories})
+
+def provider_create(request):
+    if request.method == 'POST':
+        form = ProviderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('provider_create')
+    else:
+        form = ProviderForm()
+    providers = Provider.objects.all()
+    return render(request, 'inventory_app/provider_create.html', {'form': form, 'providers': providers})
+
 def compra(request):
     products = Product.objects.all()
-    paginator = Paginator(products, 9)  # Mostrar 9 productos por página
+    paginator = Paginator(products, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'inventory_app/compra.html', {'page_obj': page_obj})
@@ -58,8 +79,7 @@ def agregar_al_carrito(request, pk):
 
 def ver_carrito(request):
     total = sum(item.price * item.quantity for item in carrito)
-    return render(request, 'inventory_app/agregar_al_carrito.html', {'carrito': carrito, 'total': total})
-
+    return render(request, 'inventory_app/ver_carrito.html', {'carrito': carrito, 'total': total})
 
 def realizar_compra(request):
     for item in carrito:
@@ -70,8 +90,6 @@ def realizar_compra(request):
                 item.quantity = quantity_difference
                 item.save()
             else:
-                # Si la cantidad ingresada es mayor que la cantidad en la base de datos, puedes tomar una acción adecuada
-                # como mostrar un mensaje de error o ajustar la lógica según tus necesidades.
                 pass
         else:
             item.delete()
@@ -86,24 +104,3 @@ def quitar_del_carrito(request, pk):
     product = Product.objects.get(pk=pk)
     carrito.remove(product)
     return redirect('ver_carrito')
-
-
-def provider_create(request):
-    if request.method == 'POST':
-        form = ProviderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('product_list')
-    else:
-        form = ProviderForm()
-    return render(request, 'inventory_app/provider_create.html', {'form': form})
-
-def category_create(request):
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('product_list')
-    else:
-        form = CategoryForm()
-    return render(request, 'inventory_app/category_create.html', {'form': form})

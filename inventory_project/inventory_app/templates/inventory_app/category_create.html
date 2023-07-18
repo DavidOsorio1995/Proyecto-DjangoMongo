@@ -6,3 +6,12 @@
   <button type="submit">Guardar</button>
 </form>
 
+<h2>Lista de Categorías</h2>
+
+<ul>
+  {% for category in categories %}
+    <li>{{ category.name }}</li>
+  {% empty %}
+    <li>No hay categorías.</li>
+  {% endfor %}
+</ul>

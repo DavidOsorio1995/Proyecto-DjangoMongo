@@ -5,3 +5,12 @@
   {{ form.as_p }}
   <button type="submit">Guardar</button>
 </form>
+
+<h2>Lista de Proveedores</h2>
+<ul>
+  {% for provider in providers %}
+    <li>{{ provider.name }}</li>
+  {% empty %}
+    <li>No hay proveedores.</li>
+  {% endfor %}
+</ul>
