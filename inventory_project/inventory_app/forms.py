@@ -1,19 +1,17 @@
 from django import forms
-from .models import Product
-from .models import Proveedor
-from .models import Categorias
+from .models import Product, Category, Provider
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
 
-class ProveedorForm(forms.ModelForm):
+class ProviderForm(forms.ModelForm):
     class Meta:
-        model = Proveedor
+        model = Provider
         fields = '__all__'
 
-class CategoriasForm(forms.ModelForm):
+class CategoryForm(forms.ModelForm):
     class Meta:
-        model = Categorias
+        model = Category
         fields = '__all__'

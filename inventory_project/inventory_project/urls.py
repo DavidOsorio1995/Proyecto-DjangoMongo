@@ -5,8 +5,6 @@ urlpatterns = [
     path('', views.compra, name='compra'),
     path('products/', views.product_list, name='product_list'),
     path('products/create/', views.product_create, name='product_create'),
-    path('proveedor/', views.proveedor_create, name='proveedor_create'),
-    path('categoria/', views.categoria_create, name='categoria_create'),
     path('products/update/<int:pk>/', views.product_update, name='product_update'),
     path('products/delete/<int:pk>/', views.product_delete, name='product_delete'),
     path('compra/', views.compra, name='compra'),
@@ -15,4 +13,6 @@ urlpatterns = [
     path('realizar_compra/', views.realizar_compra, name='realizar_compra'),
     path('compra_confirmada/', views.compra_confirmada, name='compra_confirmada'),
     path('quitar_del_carrito/<int:pk>/', views.quitar_del_carrito, name='quitar_del_carrito'),
+    path('providers/create/', views.provider_create, name='provider_create'),
+    path('categories/create/', views.category_create, name='category_create'),
 ]

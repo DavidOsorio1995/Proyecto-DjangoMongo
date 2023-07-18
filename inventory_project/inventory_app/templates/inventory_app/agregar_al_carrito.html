@@ -4,12 +4,12 @@
 <script>
   function calcularTotal() {
     var total = 0;
-    var inputs = document.querySelectorAll('input[nombre^="cantidad_"]');
+    var inputs = document.querySelectorAll('input[name^="quantity_"]');
     inputs.forEach(function(input) {
       var itemId = input.getAttribute('data-item-id');
-      var itemprecio = parseFloat(input.getAttribute('data-item-precio'));
-      var cantidad = parseInt(input.value);
-      total += itemprecio * cantidad;
+      var itemPrice = parseFloat(input.getAttribute('data-item-price'));
+      var quantity = parseInt(input.value);
+      total += itemPrice * quantity;
     });
     document.getElementById('total').innerText = '$' + total.toFixed(0);
   }
@@ -20,9 +20,9 @@
   <ul>
     {% for item in carrito %}
       <li>
-        {{ item.nombre }} - ${{ item.precio }} - Cantidad:
-        <input type="number" nombre="cantidad_{{ item.pk }}" data-item-id="{{ item.pk }}" data-item-precio="{{ item.precio }}" value="{{ item.cantidad }}" min="0" onchange="calcularTotal()">
-        <input type="hidden" nombre="product_id_{{ item.pk }}" value="{{ item.pk }}">
+        {{ item.name }} - ${{ item.price }} - Cantidad:
+        <input type="number" name="quantity_{{ item.pk }}" data-item-id="{{ item.pk }}" data-item-price="{{ item.price }}" value="{{ item.quantity }}" min="0" onchange="calcularTotal()">
+        <input type="hidden" name="product_id_{{ item.pk }}" value="{{ item.pk }}">
         <a href="{% url 'quitar_del_carrito' item.pk %}">Quitar</a>
       </li>
     {% endfor %}

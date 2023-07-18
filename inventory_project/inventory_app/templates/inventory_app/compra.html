@@ -1,12 +1,12 @@
 <h1>Productos disponibles</h1>
 
 {% for product in page_obj %}
-  {% if product.cantidad > 0 %}
+  {% if product.quantity > 0 %}
     <div>
-      <h3>{{ product.nombre }}</h3>
-      <p>Precio: ${{ product.precio }}</p>
-      <p>Unidades disponibles: {{ product.cantidad }}</p>
-      <p>{{ product.descripcion }}</p>
+      <h3>{{ product.name }}</h3>
+      <p>Precio: ${{ product.price }}</p>
+      <p>Unidades disponibles: {{ product.quantity }}</p>
+      <p>{{ product.description }}</p>
       <form method="POST" action="{% url 'agregar_al_carrito' product.pk %}">
         {% csrf_token %}
         <button type="submit">Agregar al carrito</button>
